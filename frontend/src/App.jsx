@@ -1,0 +1,57 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Context Providers
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+
+// Components
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import PrivateRoute from './components/PrivateRoute';
+
+// Pages
+import Home from './pages/Home';
+import ProductDetail from './pages/ProductDetail';
+import Cart from './pages/Cart';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Checkout from './pages/Checkout';
+import OrderSuccess from './pages/OrderSuccess';
+import AdminDashboard from './pages/AdminDashboard';
+
+function App() {
+  return (
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <Navbar />
+          <main>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+
+              {/* Protected Shipping & Checkout Routes */}
+              <Route element={<PrivateRoute />}>
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order-success" element={<OrderSuccess />} />
+              </Route>
+
+              {/* Protected Admin Routes */}
+              <Route element={<PrivateRoute adminOnly={true} />}>
+                <Route path="/admin" element={<AdminDashboard />} />
+              </Route>
+            </Routes>
+          </main>
+          <Footer />
+        </Router>
+      </CartProvider>
+    </AuthProvider>
+  );
+}
+
+export default App;
