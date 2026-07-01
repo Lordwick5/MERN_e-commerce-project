@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { API_URL } from "../config";
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [localError, setLocalError] = useState(null);
 
   const { userInfo, loading, error, register, setError } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const Register = () => {
     setLocalError(null);
   }, []);
 
-  const redirect = location.state?.from || '/';
+  const redirect = location.state?.from || "/";
 
   useEffect(() => {
     if (userInfo) {
@@ -31,7 +32,7 @@ const Register = () => {
     setLocalError(null);
 
     if (password !== confirmPassword) {
-      setLocalError('Passwords do not match');
+      setLocalError("Passwords do not match");
       return;
     }
 
@@ -43,24 +44,46 @@ const Register = () => {
   };
 
   return (
-    <div className="animate-fade-in" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '70vh' }}>
-      <div className="glass" style={{ padding: '3rem', width: '100%', maxWidth: '450px', border: '1px solid var(--border-light)' }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem', textAlign: 'center' }}>
+    <div
+      className="animate-fade-in"
+      style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "70vh" }}
+    >
+      <div
+        className="glass"
+        style={{
+          padding: "3rem",
+          width: "100%",
+          maxWidth: "450px",
+          border: "1px solid var(--border-light)",
+        }}
+      >
+        <h2
+          style={{ fontSize: "2rem", fontWeight: 700, marginBottom: "0.5rem", textAlign: "center" }}
+        >
           Create <span className="text-gradient-cyan">Account</span>
         </h2>
-        <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '2rem', fontSize: '0.95rem' }}>
+        <p
+          style={{
+            color: "var(--text-secondary)",
+            textAlign: "center",
+            marginBottom: "2rem",
+            fontSize: "0.95rem",
+          }}
+        >
           Join us to start building your gear collection.
         </p>
 
         {(localError || error) && (
-          <div className="alert alert-error" style={{ fontSize: '0.9rem', padding: '0.75rem' }}>
+          <div className="alert alert-error" style={{ fontSize: "0.9rem", padding: "0.75rem" }}>
             {localError || error}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="name">Full Name</label>
+            <label className="form-label" htmlFor="name">
+              Full Name
+            </label>
             <input
               type="text"
               id="name"
@@ -73,7 +96,9 @@ const Register = () => {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="email">Email Address</label>
+            <label className="form-label" htmlFor="email">
+              Email Address
+            </label>
             <input
               type="email"
               id="email"
@@ -86,7 +111,9 @@ const Register = () => {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="password">Password</label>
+            <label className="form-label" htmlFor="password">
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -98,8 +125,10 @@ const Register = () => {
             />
           </div>
 
-          <div className="form-group" style={{ marginBottom: '2rem' }}>
-            <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
+          <div className="form-group" style={{ marginBottom: "2rem" }}>
+            <label className="form-label" htmlFor="confirmPassword">
+              Confirm Password
+            </label>
             <input
               type="password"
               id="confirmPassword"
@@ -115,22 +144,32 @@ const Register = () => {
             type="submit"
             disabled={loading}
             className="btn btn-primary"
-            style={{ width: '100%', padding: '0.9rem', marginBottom: '1.5rem' }}
+            style={{ width: "100%", padding: "0.9rem", marginBottom: "1.5rem" }}
           >
             {loading ? (
-              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-                <span className="spinner" style={{ width: '18px', height: '18px', margin: '0', borderWidth: '2px' }} />
+              <span
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <span
+                  className="spinner"
+                  style={{ width: "18px", height: "18px", margin: "0", borderWidth: "2px" }}
+                />
                 Registering...
               </span>
             ) : (
-              'Create Account'
+              "Create Account"
             )}
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-          Already have an account?{' '}
-          <Link to="/login" style={{ color: 'var(--accent-color)', fontWeight: 600 }}>
+        <div style={{ textAlign: "center", fontSize: "0.9rem", color: "var(--text-secondary)" }}>
+          Already have an account?{" "}
+          <Link to="/login" style={{ color: "var(--accent-color)", fontWeight: 600 }}>
             Sign In
           </Link>
         </div>

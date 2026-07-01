@@ -1,4 +1,5 @@
 import React from 'react';
+import { API_URL } from '../config';
 
 const Footer = () => {
   return (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { API_URL } from '../config';
 
 const OrderSuccess = () => {
   const location = useLocation();
