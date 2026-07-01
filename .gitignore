@@ -1,0 +1,12 @@
+**/node_modules
+**/.env
+**/dist
+**/dist-ssr
+*.log
+npm-debug.log*
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.sw?
