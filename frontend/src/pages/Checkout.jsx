@@ -269,21 +269,13 @@ const Checkout = () => {
                     <div className="spinner" />
                     <p style={{ color: "var(--text-secondary)" }}>Configuring payment gateway...</p>
                   </div>
-                ) : isMock ? (
-                  /* Demo Mock card input view without Stripe Elements context */
-                  <CheckoutForm
-                    clientSecret="mock_secret"
-                    totalPrice={totalPrice}
-                    isMock={true}
-                    onSuccess={handlePaymentSuccess}
-                  />
                 ) : (
-                  /* Live Stripe Elements Wrapper */
+                  /* Stripe Elements Wrapper (handles both live and mock mode gracefully) */
                   <Elements stripe={stripePromise}>
                     <CheckoutForm
-                      clientSecret={clientSecret}
+                      clientSecret={isMock ? "mock_secret" : clientSecret}
                       totalPrice={totalPrice}
-                      isMock={false}
+                      isMock={isMock}
                       onSuccess={handlePaymentSuccess}
                     />
                   </Elements>
