@@ -64,34 +64,36 @@ const Navbar = () => {
         <Link to="/" onClick={() => setMenuOpen(false)} style={{ fontSize: '1rem', fontWeight: 500 }}>
           Catalog
         </Link>
-        <Link to="/cart" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', position: 'relative' }}>
-          <span>Cart</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}>
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-          {cartCount > 0 && (
-            <span style={{
-              position: 'absolute',
-              top: '-8px',
-              right: '-12px',
-              background: 'var(--accent-gradient)',
-              color: '#fff',
-              fontSize: '0.7rem',
-              fontWeight: 700,
-              width: '18px',
-              height: '18px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 0 8px rgba(248, 87, 166, 0.4)'
-            }}>
-              {cartCount}
-            </span>
-          )}
-        </Link>
+        {(!userInfo || !userInfo.isAdmin) && (
+          <Link to="/cart" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', position: 'relative' }}>
+            <span>Cart</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle' }}>
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            {cartCount > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: '-8px',
+                right: '-12px',
+                background: 'var(--accent-gradient)',
+                color: '#fff',
+                fontSize: '0.7rem',
+                fontWeight: 700,
+                width: '18px',
+                height: '18px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 0 8px rgba(248, 87, 166, 0.4)'
+              }}>
+                {cartCount}
+              </span>
+            )}
+          </Link>
+        )}
 
         {userInfo && userInfo.isAdmin && (
           <Link to="/admin" onClick={() => setMenuOpen(false)} style={{

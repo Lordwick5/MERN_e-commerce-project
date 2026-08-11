@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
+import { AuthContext } from "../context/AuthContext";
 import { API_URL } from "../config";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
+  const { userInfo } = useContext(AuthContext);
 
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
@@ -98,72 +100,86 @@ const ProductDetail = () => {
             </p>
           </div>
 
-          {/* Add to Cart Glass Panel */}
-          <div
-            className="glass"
-            style={{ padding: "2rem", border: "1px solid var(--border-light)" }}
-          >
+          {userInfo && userInfo.isAdmin ? (
             <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "1rem",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
-                paddingBottom: "1rem",
-              }}
+              className="glass"
+              style={{ padding: "2rem", border: "1px solid var(--border-light)", textAlign: "center" }}
             >
-              <span style={{ color: "var(--text-secondary)" }}>Price:</span>
-              <strong>${product.price.toFixed(2)}</strong>
+              <p style={{ color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
+                You are logged in as an <strong>Administrator</strong>. Add to Cart is disabled.
+              </p>
+              <Link to="/admin" className="btn btn-primary" style={{ width: "100%", padding: "1rem" }}>
+                Manage Inventory & Orders
+              </Link>
             </div>
-
+          ) : (
+            /* Add to Cart Glass Panel */
             <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "1.5rem",
-                alignItems: "center",
-              }}
+              className="glass"
+              style={{ padding: "2rem", border: "1px solid var(--border-light)" }}
             >
-              <span style={{ color: "var(--text-secondary)" }}>Status:</span>
-              <span style={{ fontWeight: 600 }}>
-                {product.countInStock > 0 ? "Available" : "Unavailable"}
-              </span>
-            </div>
-
-            {product.countInStock > 0 && (
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  marginBottom: "2rem",
+                  marginBottom: "1rem",
+                  borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+                  paddingBottom: "1rem",
+                }}
+              >
+                <span style={{ color: "var(--text-secondary)" }}>Price:</span>
+                <strong>${product.price.toFixed(2)}</strong>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "1.5rem",
                   alignItems: "center",
                 }}
               >
-                <span style={{ color: "var(--text-secondary)" }}>Quantity:</span>
-                <select
-                  value={qty}
-                  onChange={(e) => setQty(Number(e.target.value))}
-                  className="form-input"
-                  style={{ width: "80px", padding: "0.4rem 0.8rem", background: "#0d1222" }}
-                >
-                  {[...Array(product.countInStock).keys()].map((x) => (
-                    <option key={x + 1} value={x + 1}>
-                      {x + 1}
-                    </option>
-                  ))}
-                </select>
+                <span style={{ color: "var(--text-secondary)" }}>Status:</span>
+                <span style={{ fontWeight: 600 }}>
+                  {product.countInStock > 0 ? "Available" : "Unavailable"}
+                </span>
               </div>
-            )}
 
-            <button
-              onClick={handleAddToCart}
-              className={`btn btn-primary ${product.countInStock === 0 ? "btn-disabled" : ""}`}
-              disabled={product.countInStock === 0}
-              style={{ width: "100%", padding: "1rem" }}
-            >
-              Add to Shopping Cart
-            </button>
-          </div>
+              {product.countInStock > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "2rem",
+                    alignItems: "center",
+                  }}
+                >
+                  <span style={{ color: "var(--text-secondary)" }}>Quantity:</span>
+                  <select
+                    value={qty}
+                    onChange={(e) => setQty(Number(e.target.value))}
+                    className="form-input"
+                    style={{ width: "80px", padding: "0.4rem 0.8rem", background: "#0d1222" }}
+                  >
+                    {[...Array(product.countInStock).keys()].map((x) => (
+                      <option key={x + 1} value={x + 1}>
+                        {x + 1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <button
+                onClick={handleAddToCart}
+                className={`btn btn-primary ${product.countInStock === 0 ? "btn-disabled" : ""}`}
+                disabled={product.countInStock === 0}
+                style={{ width: "100%", padding: "1rem" }}
+              >
+                Add to Shopping Cart
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
